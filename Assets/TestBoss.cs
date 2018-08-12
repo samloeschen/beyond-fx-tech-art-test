@@ -9,7 +9,7 @@ public class TestBoss : MonoBehaviour {
 
 		float speed = parametersAsset.bossParameters.moveSpeed;
 		float t = Mathf.Repeat(Time.time * speed, 1f);
-		float y = Mathf.Abs(Mathf.Sin(t * Mathf.PI * 5f) * (1f - Mathf.Sqrt(t))) * 2f;
+		float y = Mathf.Abs(Mathf.Sin(Mathf.Sqrt(1f - t) * Mathf.PI * 8f) * (1f - Mathf.Sqrt(t))) * 2f;
 
 		transform.position = Vector3.zero + (Vector3.up * y);
 	}
