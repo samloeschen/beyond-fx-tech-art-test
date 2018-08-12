@@ -17,7 +17,7 @@ MonoBehaviour:
     strongType: 4
     weakType: 14
     healthPoints: 100
-    moveSpeed: 0
+    moveSpeed: 0.6
     attackDelayTime:
       minimumBound: 0
       maximumBound: 10
