@@ -10,7 +10,6 @@ public class LimitedRangeDrawer : PropertyDrawer {
 	public float labelWidth = 110f;
 	public float labelCharacterWidth = 10f;
 	public float fieldHeight = 16;
-	// public float sliderWidth = 0.5f;
 	public float horizontalPadding = 2f;
 
 	public override void OnGUI(Rect pos, SerializedProperty property, GUIContent label) {

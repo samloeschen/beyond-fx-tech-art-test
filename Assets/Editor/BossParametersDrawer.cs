@@ -38,7 +38,7 @@ public class BossParametersDrawer : PropertyDrawer {
 			float y = pos.y + textFieldHeight;
 			float width = pos.width - textFieldWidthOffset;
 
-			DrawPropertyField(name, 			pos,	width,	textFieldHeight, 			ref y);
+			DrawPropertyField(name,				pos,	width,	textFieldHeight, 			ref y);
 			DrawPropertyField(subtitle, 		pos, 	width, 	textFieldHeight,			ref y);
 			DrawPropertyField(strongType, 		pos, 	width, 	textFieldHeight, 			ref y);
 			DrawPropertyField(weakType, 		pos, 	width, 	textFieldHeight, 			ref y);
@@ -46,7 +46,7 @@ public class BossParametersDrawer : PropertyDrawer {
 			DrawPropertyField(moveSpeed,	 	pos, 	width, 	textFieldHeight, 			ref y);
 			DrawPropertyField(attackDelayTime, 	pos, 	width, 	textFieldHeight, 			ref y);
 			DrawPropertyField(moveDelayTime, 	pos, 	width, 	textFieldHeight, 			ref y);
-			DrawPropertyField(description, 		pos, 	width, 	descriptionTextAreaHeight, 	ref y);
+			DrawPropertyField(description, 		pos, 	width, 	descriptionTextAreaHeight,	ref y);
 
 			propertyHeight = y - pos.y;
 			EditorGUI.indentLevel = indent;

@@ -71,6 +71,7 @@ public class BossCreationMenu: EditorWindow {
 				if (GUILayout.Button("Delete")) {
 					isDeleting = true;
 				}
+
 				GUILayout.EndHorizontal();
 
 			//handle isDeleting state
@@ -78,11 +79,14 @@ public class BossCreationMenu: EditorWindow {
 				
 				GUILayout.BeginHorizontal();
 				GUILayout.FlexibleSpace();
+
 				GUILayout.Label("Are you sure?");
+				
 				GUILayout.FlexibleSpace();
 				GUILayout.EndHorizontal();
 
 				GUILayout.BeginHorizontal();
+
 				Color color = GUI.color;
 				GUI.backgroundColor = Color.red;
 				if (GUILayout.Button("Delete")) {
@@ -93,6 +97,7 @@ public class BossCreationMenu: EditorWindow {
 				if (GUILayout.Button ("Cancel")) {
 					isDeleting = false;
 				}
+				
 				GUILayout.EndHorizontal();
 			}
 		}
@@ -118,7 +123,6 @@ public class BossCreationMenu: EditorWindow {
 
 	void CloneAsset () {
 		cloneSource = currentAsset;
-		
 		BossParametersAsset clone = Object.Instantiate(currentAsset);
 		clone.name = currentAsset.name + " Clone";
 		clone.bossParameters.name += " Clone";
@@ -128,6 +132,7 @@ public class BossCreationMenu: EditorWindow {
 	void DeleteAsset () {
 		string parentDirectory = Path.GetDirectoryName(AssetDatabase.GetAssetPath(currentAsset));
 		currentAsset = null;
+		EditAsset(currentAsset);
 		FileUtil.DeleteFileOrDirectory(parentDirectory);
 		Debug.Log(parentDirectory);
 		AssetDatabase.Refresh();
