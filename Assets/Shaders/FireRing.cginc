@@ -37,40 +37,42 @@ float pcurve (float x, float a, float b )
     return k * pow( x, a ) * pow( 1.0-x, b );
 }
 
-fixed4 fireRingFragment( float2 uv ) 
+fixed4 fireRingFragment( float2 uv, sampler2D gradient ) 
 {
     float time = _Time.y;
     
-    float size0 = 4.0;
-    float speed0 = 1.5;
+    float size0 = 8.0;
+    float speed0 = 1;
         
     float2 uvScaling = float2(2.5, 1.0);
 
     float2 uv0 = float2(uv.x, uv.y + (time * speed0)) * uvScaling * size0;
     float up0 = voronoise(uv0, 1.0, 0.45);
 
+    float size2 = 8.2;
+    float speed2 = 1;
+
+
+    float2 uv2 = float2(uv.x, uv.y + (time * speed2)) * uvScaling * size2;
+    float up2 = voronoise(uv0, 1.0, 0.45);
+
     
-    float size1 = 8.0;
+    float size1 = 10.0;
     float speed1 = 2.0;
     
-    float2 uv1 = float2(uv.x, uv.y + ((time * speed1) + 100)) * uvScaling * size1;
+    float2 uv1 = float2(uv.x - (time * 0.5), uv.y + ((time * speed1) + 20)) * uvScaling * size1;
     float up1 = voronoise(uv1, 0.8, 0.5);
-
-    float size2 = 2.0;
-    float speed2 = 6.0;
-    
-
-    float2 uv2 = float2(uv.x, uv.y + (time + 200 * speed2)) * uvScaling * size2;
-    // float up2 = voronoise(uv2, 0.8, 0.5);
 
     float curve = pcurve(uv.y, 5.0, 1.0);
     float r = (up1 * up0) + curve;
-    // r = up0;
+    r *= pcurve(uv.y, 2.0, 1.0);
+    
+    r *= 0.9;
+    r = saturate(r);
 
-    r *= curve;
-    r *= 1.1;
+    float3 rgb = tex2D(gradient, float2((1.0 - r), 1));
 
     // r = up1;
     
-    return fixed4(r, r, r, r);
+    return fixed4(rgb * r, r);
 }

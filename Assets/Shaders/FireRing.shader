@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		_MainTex ("Texture", 2D) = "white" {}
+		_Gradient ("Texture", 2D) = "white" {}
 	}
 	SubShader
 	{
@@ -36,18 +36,22 @@
 				float2 uv : TEXCOORD0;
 				UNITY_FOG_COORDS(1)
 				float4 vertex : SV_POSITION;
+				float2 uv2 : TEXCOORD1;
+
 			};
 
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
+			sampler2D _Gradient;
 			
-
-
 			v2f vert (appdata v)
 			{
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
-				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				o.uv = v.uv;
+				
+				float u0 = frac(o.uv.x);
+				float u1 = frac(o.uv.x + 0.5) - 0.5;
+				o.uv2 = float2(u0, u1);
+
 				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
 			}
@@ -55,11 +59,16 @@
 			fixed4 frag (v2f i) : SV_Target
 			{
 				// sample the texture
-				fixed4 col = tex2D(_MainTex, i.uv);
+				fixed4 col = tex2D(_Gradient, i.uv);
 				// apply fog
 				// UNITY_APPLY_FOG(i.fogCoord, col);
+				
+				float u0 = i.uv2.x;
+				float u1 = i.uv2.y;
 
-				return fireRingFragment(i.uv);
+				i.uv.x = (fwidth(u0) < fwidth(u1) - 0.001) ? u0 : u1;
+
+				return fireRingFragment(i.uv, _Gradient);	
 			}
 
 			ENDCG
@@ -68,7 +77,7 @@
 		Pass
 		{
 
-			Blend One OneMinusSrcAlpha			
+			Blend One OneMinusSrcAlpha		
 			Cull Back
 			ZWrite Off
 
@@ -93,16 +102,21 @@
 				float2 uv : TEXCOORD0;
 				UNITY_FOG_COORDS(1)
 				float4 vertex : SV_POSITION;
+				float2 uv2 : TEXCOORD1;
 			};
 
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
+			sampler2D _Gradient;
 
 			v2f vert (appdata v)
 			{
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
-				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				o.uv = v.uv;
+				
+				float u0 = frac(o.uv.x);
+				float u1 = frac(o.uv.x + 0.5) - 0.5;
+				o.uv2 = float2(u0, u1);
+
 				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
 			}
@@ -110,11 +124,16 @@
 			fixed4 frag (v2f i) : SV_Target
 			{
 				// sample the texture
-				fixed4 col = tex2D(_MainTex, i.uv);
+				fixed4 col = tex2D(_Gradient, i.uv);
 				// apply fog
 				// UNITY_APPLY_FOG(i.fogCoord, col);
+				
+				float u0 = i.uv2.x;
+				float u1 = i.uv2.y;
 
-				return fireRingFragment(i.uv);	
+				i.uv.x = (fwidth(u0) < fwidth(u1) - 0.001) ? u0 : u1;
+
+				return fireRingFragment(i.uv, _Gradient);	
 			}
 
 			ENDCG
