@@ -21,11 +21,11 @@ MonoBehaviour:
     attackDelayTime:
       minimumBound: 0
       maximumBound: 10
-      _lowerBound: 0
-      _upperBound: 10
+      _lowerBound: 1.2209302
+      _upperBound: 8.135048
     moveDelayTime:
       minimumBound: 0
       maximumBound: 10
-      _lowerBound: 0
+      _lowerBound: 2.8639445
       _upperBound: 10
     description: Enter a description here

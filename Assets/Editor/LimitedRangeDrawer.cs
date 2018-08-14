@@ -10,7 +10,7 @@ public class LimitedRangeDrawer : PropertyDrawer {
 	public float labelWidth = 110f;
 	public float labelCharacterWidth = 10f;
 	public float fieldHeight = 16;
-	public float horizontalPadding = 2f;
+	public float horizontalPadding = -2f;
 
 	public override void OnGUI(Rect pos, SerializedProperty property, GUIContent label) {
 		
@@ -31,14 +31,20 @@ public class LimitedRangeDrawer : PropertyDrawer {
 		minimumBound.floatValue = EditorGUI.FloatField(new Rect(x, pos.y, floatFieldWidth, fieldHeight), minimumBound.floatValue);
 		x += floatFieldWidth + horizontalPadding;
 
+		EditorGUI.LabelField(new Rect(x, pos.y, floatFieldWidth, fieldHeight), lowerBound.floatValue.ToString());
+		x += floatFieldWidth + horizontalPadding;
+
 		//draw upper/lower bound range slider
 		float lower = lowerBound.floatValue;
 		float upper = upperBound.floatValue;
-		float sliderWidth = pos.width - ((floatFieldWidth + horizontalPadding) * 2) - labelWidth - horizontalPadding; //slider width is flexible
+		float sliderWidth = pos.width - ((floatFieldWidth + horizontalPadding) * 4) - labelWidth - horizontalPadding; //slider width is flexible
 		EditorGUI.MinMaxSlider(new Rect(x, pos.y, sliderWidth, fieldHeight), ref lower, ref upper, minimumBound.floatValue, maximumBound.floatValue);
 		lowerBound.floatValue = lower;
 		upperBound.floatValue = upper;
 		x += sliderWidth + horizontalPadding;
+
+		EditorGUI.LabelField(new Rect(x, pos.y, floatFieldWidth, fieldHeight), upperBound.floatValue.ToString());
+		x += floatFieldWidth + horizontalPadding;
 
 		//draw maximum bound field
 		maximumBound.floatValue = EditorGUI.FloatField(new Rect(x, pos.y, floatFieldWidth, fieldHeight), maximumBound.floatValue);
