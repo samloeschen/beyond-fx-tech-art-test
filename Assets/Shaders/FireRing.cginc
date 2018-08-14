@@ -8,7 +8,7 @@ float pcurve (float x, float a, float b )
 float3 fireRingVertOffset( float2 uv, float3 normal, sampler2D noiseTex ) {
         float2 noiseUV = float2(uv.x, uv.y * 0.5) + float2(_Time.y * 0.8, _Time.y * 0.5);
         float noise = tex2Dlod(noiseTex, float4(noiseUV, 0, 0));
-        return normal * noise * 0.8;
+        return normal * noise * 1.0;
 }
 
 fixed4 fireRingFragment( float2 uv, sampler2D gradient, sampler2D voronoise0, sampler2D voronoise1 ) 
